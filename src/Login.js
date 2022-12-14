@@ -1,5 +1,5 @@
 // imports nécessaires
-import React from 'react';
+import React, { useState } from 'react';
 
 
 // teste si l'age est >= 18
@@ -37,68 +37,43 @@ function checkMail(mail) {
     return mail.match(mailformat);
 }
 
-function handleAndBlur(fonction, element, elementComparaison) {
-    element.addEventListener('input', (e) => {
-      if (elementComparaison != null) {
-        if (fonction(element.value, elementComparaison.value)) {
-          e.target.style = "background:lightgreen";
-        }
-        else {
-          e.target.style = "background:lightcoral";
-        }
-      }
-      else {
-        if (fonction(element.value)) {
-          e.target.style = "background:lightgreen";
-        }
-        else {
-          e.target.style = "background:lightcoral";
-        }
-      }
-    });
-
-    element.addEventListener('focus', (e) => {
-      if (elementComparaison != null) {
-        if (fonction(element.value, elementComparaison.value)) {
-          e.target.style = "background:lightgreen";
-        }
-        else {
-          e.target.style = "background:lightcoral";
-        }
-      }
-      else {
-        if (fonction(element.value)) {
-          e.target.style = "background:lightgreen";
-        }
-        else {
-          e.target.style = "background:lightcoral";
-        }
-      }
-    });
-
-    element.addEventListener('blur', (e) => {
-      if (elementComparaison != null) {
-        if (fonction(element.value, elementComparaison.value)) {
-          e.target.style = "background:white";
-        }
-        else {
-          e.target.style = "background:lightcoral";
-        }
-      }
-      else {
-        if (fonction(element.value)) {
-          e.target.style = "background:white";
-        }
-        else {
-          e.target.style = "background:lightcoral";
-        }
-      }
-
-    });
+function handleChangeFocusAndBlur(event, fonction, fonctionChangement, blur, elementComparaison) {
+  if(elementComparaison != null) {
+    if (fonction(event.target.value, elementComparaison.value)) {
+      if(blur) { fonctionChangement('white'); }
+      else { fonctionChangement('lightgreen');}
+      
+    }
+    else {
+      fonctionChangement('lightcoral');
+    }
+  }
+  else {
+    if (fonction(event.target.value)) {
+      if(blur) { fonctionChangement('white'); }
+      else { fonctionChangement('lightgreen');}
+    }
+    else {
+      fonctionChangement('lightcoral');
+    }
+  }
 }
 
-
 function Login() {
+
+  // les variables d'état pour le formulaire de connexion
+  const [mailCo,setMailCo] = useState('white');
+  const [passCo,setPassCo] = useState('white');
+
+  // les variables d'état pour le formulaire d'inscription
+  const [mailIn,setMailIn] = useState('white');
+  const [mailInConf,setMailInConf] = useState('white');
+  const [passIn,setPassIn] = useState('white');
+  const [passInConf,setPassInConf] = useState('white');
+  const [nomIn,setNomIn] = useState('white');
+  const [ageIn,setAgeIn] = useState('white');
+  const [depIn,setDepIn] = useState('white');
+
     return (
 
 <div className="container-fluid nav-justified" >
@@ -120,20 +95,22 @@ function Login() {
           {/* MAIL */}
           <div className="form-group" id="mail">
             <label className="form-label" for="loginMail">Adresse mail</label>
-            <input type="email" id="loginMail" className="form-control" style={{"background": "white"}}/>
+            <input type="email" id="loginMail" className="form-control" style={{"background": mailCo}}
+            onChange = { event => handleChangeFocusAndBlur(event,checkMail,setMailCo,false) }
+            onFocus = { event => handleChangeFocusAndBlur(event,checkMail,setMailCo,false) }
+            onBlur = { event => handleChangeFocusAndBlur(event,checkMail,setMailCo,true)}
+            />
           </div>
-          {
-            handleAndBlur(checkMail,document.getElementById('loginMail'))
-          }
 
           {/* MDP */}
           <div className="form-group">
             <label className="form-label" for="loginMDP">Mot de passe</label>
-            <input type="password" id="loginMDP" className="form-control" />
+            <input type="password" id="loginMDP" className="form-control" style={{"background": passCo}}
+            onChange = { event => handleChangeFocusAndBlur(event,isNotEmpty,setPassCo,false) }
+            onFocus = { event => handleChangeFocusAndBlur(event,isNotEmpty,setPassCo,false) }
+            onBlur = { event => handleChangeFocusAndBlur(event,isNotEmpty,setPassCo,true)}
+            />
           </div>
-          {
-            handleAndBlur(isNotEmpty,document.getElementById('loginMDP'))
-          }
 
           {/* RESTER CONNECTE & OUBLI MDP*/}
           <div className="form-row">
@@ -163,83 +140,92 @@ function Login() {
           {/* MAIL */}
           <div className="form-group">
             <label className="form-label" for="inscriptionMail">Adresse mail</label>
-            <input type="email" id="inscriptionMail" className="form-control" style={{"background": "white"}}/>
+            <input type="email" id="inscriptionMail" className="form-control" style={{"background": mailIn}}
+            onChange = { event => handleChangeFocusAndBlur(event,checkMail,setMailIn,false) }
+            onFocus = { event => handleChangeFocusAndBlur(event,checkMail,setMailIn,false) }
+            onBlur = { event => handleChangeFocusAndBlur(event,checkMail,setMailIn,true)}
+            />
           </div>
-          {
-            handleAndBlur(checkMail,document.getElementById('inscriptionMail'))
-          }
 
           {/* MAIL CONFIRMATION*/}
           <div className="form-group">
             <label className="form-label" for="inscriptionMailConfirmation">Confirmez l'adresse mail</label>
-            <input type="email" id="inscriptionMailConfirmation" className="form-control" style={{"background": "white"}}/>
+            <input type="email" id="inscriptionMailConfirmation" className="form-control" style={{"background": mailInConf}}
+            onChange = { event => handleChangeFocusAndBlur(event,testMails,setMailInConf,false,document.getElementById('inscriptionMail')) }
+            onFocus = { event => handleChangeFocusAndBlur(event,testMails,setMailInConf,false,document.getElementById('inscriptionMail')) }
+            onBlur = { event => handleChangeFocusAndBlur(event,testMails,setMailInConf,true,document.getElementById('inscriptionMail'))}
+            />
           </div>
-          {
-            handleAndBlur(testMails,document.getElementById('inscriptionMailConfirmation'),document.getElementById('inscriptionMail'))
-          }
-
           {/* MDP */}
           <div className="form-group">
             <label className="form-label" for="inscriptionMDP">Mot de passe</label>
-            <input type="password" id="inscriptionMDP" className="form-control" />
+            <input type="password" id="inscriptionMDP" className="form-control"  style={{"background": passIn}}
+            onChange = { event => handleChangeFocusAndBlur(event,isNotEmpty,setPassIn,false) }
+            onFocus = { event => handleChangeFocusAndBlur(event,isNotEmpty,setPassIn,false) }
+            onBlur = { event => handleChangeFocusAndBlur(event,isNotEmpty,setPassIn,true)}
+            />
           </div>
-          {
-            handleAndBlur(isNotEmpty,document.getElementById('inscriptionMDP'))
-          }
 
           {/* MDP REPETITION*/}
           <div className="form-group">
             <label className="form-label" for="inscriptionRepetitionMDP">Répétez le mot de passe</label>
-            <input type="password" id="inscriptionRepetitionMDP" className="form-control" />
+            <input type="password" id="inscriptionRepetitionMDP" className="form-control"  style={{"background": passInConf}}
+            onChange = { event => handleChangeFocusAndBlur(event,testMDP,setPassInConf,false,document.getElementById('inscriptionMDP')) }
+            onFocus = { event => handleChangeFocusAndBlur(event,testMDP,setPassInConf,false,document.getElementById('inscriptionMDP')) }
+            onBlur = { event => handleChangeFocusAndBlur(event,testMDP,setPassInConf,true,document.getElementById('inscriptionMDP'))}
+            />
           </div>
-          {
-            handleAndBlur(testMDP,document.getElementById('inscriptionRepetitionMDP'), document.getElementById('inscriptionMDP'))
-          }
 
-          {/* PRENOM & AGE*/}
+          {/* NOM & AGE*/}
           <div className="form-row">
-            {/* PRENOM */}
+            {/* NOM */}
             <div className="form-group col-md-6">
-              <label className="form-label" for="inscriptionPrenom">Prénom</label>
-              <input type="text" id="inscriptionPrenom" className="form-control" style={{"background": "white"}} />
+              <label className="form-label" for="inscriptionNom">Prénom - NOM</label>
+              <input type="text" id="inscriptionNom" className="form-control"  style={{"background": nomIn}}
+            onChange = { event => handleChangeFocusAndBlur(event,isNotEmpty,setNomIn,false) }
+            onFocus = { event => handleChangeFocusAndBlur(event,isNotEmpty,setNomIn,false) }
+            onBlur = { event => handleChangeFocusAndBlur(event,isNotEmpty,setNomIn,true)}
+            />
             </div>
-            {
-              handleAndBlur(isNotEmpty,document.getElementById('inscriptionPrenom'))
-            }
 
             {/* AGE */}
             <div className="form-group col-md-1">
               <label className="form-label" for="inscriptionAge">Age</label>
-              <input type="number" id="inscriptionAge" className="form-control" />
-            </div>
-            {
-              handleAndBlur(isMajor,document.getElementById('inscriptionAge'))
-            } 
+              <input type="number" id="inscriptionAge" className="form-control"  style={{"background": ageIn}}
+            onChange = { event => handleChangeFocusAndBlur(event,isMajor,setAgeIn,false) }
+            onFocus = { event => handleChangeFocusAndBlur(event,isMajor,setAgeIn,false) }
+            onBlur = { event => handleChangeFocusAndBlur(event,isMajor,setAgeIn,true)}
+            />
+            </div> 
           </div>
 
-          {/* VALIDATION CGU */}
-          <div className="form-group form-check d-flex justify-content-center ">
-            <input className="form-check-input" type="checkbox" value="" id="registerCheck"
-              aria-describedby="registerCheckHelpText" />
-            <label className="form-check-label" for="registerCheck">
-              <i>I have read and agree to the terms...</i>
-            </label>
+          {/* ROLE */}
+          <div className="form-group">
+              <label>Rôle</label>
+              <div>
+                <input type="radio" id="huey" name="drone" value="Employe"
+                  defaultChecked/>
+                  <label for="huey">Employé</label>
+              </div>
+              <div>
+                <input type="radio" id="dewey" name="drone" value="Manager"/>
+                  <label for="Manager">Manager</label>
+              </div>
           </div>
+
+          {/* DEPARTEMENT*/}
+          <div className="form-group">
+            <label className="form-label" for="inscriptionDepartement">Département :</label>
+            <input type="text" id="inscriptionDepartement" className="form-control"  style={{"background": depIn}}
+            onChange = { event => handleChangeFocusAndBlur(event,isNotEmpty,setDepIn,false) }
+            onFocus = { event => handleChangeFocusAndBlur(event,isNotEmpty,setDepIn,false) }
+            onBlur = { event => handleChangeFocusAndBlur(event,isNotEmpty,setDepIn,true)}
+            />
+          </div>
+
           {/* ENVOYER */}
-          <button type="submit" id="buttonSubmit" className="btn btn-primary btn-block" disabled>Inscription</button>
-          {
-            // si le bouton pour les CGU est non check,
-            // on désactive le bouton de validation d'inscription
-            // et inversement
-              document.getElementById('registerCheck').addEventListener('change', (event) => {
-              if(event.currentTarget.checked){
-                document.getElementById('buttonSubmit').disabled = false;
-              }
-              else{
-                document.getElementById('buttonSubmit').disabled = true;
-              }
-            })
-          }
+          <button type="submit" id="buttonSubmit" className="btn btn-primary btn-block">Inscription</button>
+          
 
 
         </form>
