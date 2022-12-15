@@ -15,7 +15,7 @@ const passport = require('passport');
 mongoose.set('strictQuery', false);
 mongoose.connect('mongodb://127.0.0.1:27017/TPF');
 
-const port = 3000;
+const port = 5000;
 
 app.use(cors());
 app.use(express.json());
