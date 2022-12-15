@@ -45,22 +45,6 @@ export default class Login extends Component {
             />
           </div>
 
-          {/* RESTER CONNECTE & OUBLI MDP*/}
-          <div className="form-row">
-            {/* RESTER CONNECTE */}
-            <div className="form-group col-md-2">
-              <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="" id="loginCheck" />
-                <label className="form-check-label" for="loginCheck"> Rester connecté </label>
-              </div>
-            </div>
-
-            {/* OUBLI MDP */}
-            <div className="form-group col-md-2">
-              <a href="#!">Mot de passe oublié?</a>
-            </div>
-          </div>
-
           {/* BOUTON D'ENVOI */}
           <button type="submit" className="btn btn-primary btn-block mb-4">Connexion</button>
         </form>
