@@ -34,7 +34,9 @@ require("./config/passport")(passport);
 
 // initialisation de la connexion à la BDD
 mongoose.set('strictQuery', false);
-const connection = mongoose.connect('mongodb://127.0.0.1:27017/TPF');
+mongoose.connect('mongodb://127.0.0.1:27017/TPF');
+
+const connection = mongoose.connection;
 connection.once('open', () => {
     console.log("MongoDB database connection established successfully");
 })
