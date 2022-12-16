@@ -1,4 +1,4 @@
-/** Author: Valentin DUFLOT
+	 /** Author: Valentin DUFLOT
  * ce composant et les fonctions liées affichent un formulaire d'inscription
  * avec des vérifications de contenus qui changent la couleur des éléments du formulaire en fonction. 
  */
@@ -101,7 +101,7 @@ class Register extends Component {
                     <h3> Inscription: </h3>
                     {/* MAIL */}
                     <div className="form-group">
-                        <label className="form-label" for="mailI">Adresse mail</label>
+                        <label className="form-label" htmlFor="mailI">Adresse mail</label>
                         <input type="email" id="mailI" className="form-control" style={{ "background": this.state.colMail }}
                             onChange={event => {
                                 handleChangeFocusAndBlur(event, checkMail, (e) => { this.setState({ colMail: e }) }, false);
@@ -115,7 +115,7 @@ class Register extends Component {
 
                     {/* MAIL CONFIRMATION*/}
                     <div className="form-group">
-                        <label className="form-label" for="mail2I">Confirmez l'adresse mail</label>
+                        <label className="form-label" htmlFor="mail2I">Confirmez l'adresse mail</label>
                         <input type="email" id="mail2I" className="form-control" style={{ "background": this.state.colMailConf }}
                             onChange={event => {
                                 handleChangeFocusAndBlur(event, testMails, (e) => { this.setState({ colMailConf: e }) }, false, document.getElementById('mailI'));
@@ -128,7 +128,7 @@ class Register extends Component {
                     </div>
                     {/* MDP */}
                     <div className="form-group">
-                        <label className="form-label" for="passwordI">Mot de passe</label>
+                        <label className="form-label" htmlFor="passwordI">Mot de passe</label>
                         <input type="password" id="passwordI" className="form-control" style={{ "background": this.state.colPass }}
                             onChange={event => {
                                 handleChangeFocusAndBlur(event, tailleMDP, (e) => { this.setState({ colPass: e }) }, false);
@@ -141,7 +141,7 @@ class Register extends Component {
 
                     {/* MDP REPETITION*/}
                     <div className="form-group">
-                        <label className="form-label" for="password2I">Répétez le mot de passe</label>
+                        <label className="form-label" htmlFor="password2I">Répétez le mot de passe</label>
                         <input type="password" id="password2I" className="form-control" style={{ "background": this.state.colPassConf }}
                             onChange={event => {
                                 handleChangeFocusAndBlur(event, testMDP, (e) => { this.setState({ colPassConf: e }) }, false, document.getElementById('passwordI'));
@@ -157,7 +157,7 @@ class Register extends Component {
                     <div className="form-row">
                         {/* NOM */}
                         <div className="form-group col-md-6">
-                            <label className="form-label" for="nameI">Prénom - NOM</label>
+                            <label className="form-label" htmlFor="nameI">Prénom - NOM</label>
                             <input type="text" id="nameI" className="form-control" style={{ "background": this.state.colNom }}
                                 onChange={event => {
                                     handleChangeFocusAndBlur(event, isNotEmpty, (e) => { this.setState({ colNom: e }) }, false);
@@ -171,7 +171,7 @@ class Register extends Component {
 
                         {/* AGE */}
                         <div className="form-group col-md-1">
-                            <label className="form-label" for="ageI">Age</label>
+                            <label className="form-label" htmlFor="ageI">Age</label>
                             <input type="number" id="ageI" className="form-control" style={{ "background": this.state.colAge }}
                                 onChange={event => {
                                     handleChangeFocusAndBlur(event, isMajor, (e) => { this.setState({ colAge: e }) }, false);
@@ -190,17 +190,17 @@ class Register extends Component {
                         <div>
                             <input type="radio" id="employe" name="radio" value="Employe"
                                 defaultChecked onChange={event => { this.onChange(event); }} />
-                            <label for="employe">Employé</label>
+                            <label htmlFor="employe">Employé</label>
                         </div>
                         <div>
                             <input type="radio" id="manager" name="radio" value="Manager" onChange={event => { this.onChange(event); }} />
-                            <label for="Manager">Manager</label>
+                            <label htmlFor="Manager">Manager</label>
                         </div>
                     </div>
 
                     {/* DEPARTEMENT*/}
                     <div className="form-group">
-                        <label className="form-label" for="departementI">Département :</label>
+                        <label className="form-label" htmlFor="departementI">Département :</label>
                         <input type="text" id="departementI" className="form-control" style={{ "background": this.state.colDep }}
                             onChange={event => {
                                 handleChangeFocusAndBlur(event, isNotEmpty, (e) => { this.setState({ colDep: e }) }, false);

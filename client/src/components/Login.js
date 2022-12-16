@@ -5,7 +5,7 @@
 
 // imports nécessaires
 import React, { Component } from 'react';
-import { isNotEmpty, checkMail, handleChangeFocusAndBlur, tailleMDP } from '../LoginRegisterHelpers.js'
+import { checkMail, handleChangeFocusAndBlur, tailleMDP } from '../LoginRegisterHelpers.js'
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -60,7 +60,7 @@ class Login extends Component {
           <h3> Connexion :</h3>
           {/* MAIL */}
           <div className="form-group" id="mail">
-            <label className="form-label" for="mailC">Adresse mail</label>
+            <label className="form-label" htmlFor="mailC">Adresse mail</label>
             <input type="email" id="mailC" className="form-control" style={{ "background": this.state.colMail }}
               onChange={event => {
                 handleChangeFocusAndBlur(event, checkMail, (e) => { this.setState({ colMail: e }) }, false);
@@ -74,7 +74,7 @@ class Login extends Component {
 
           {/* MDP */}
           <div className="form-group">
-            <label className="form-label" for="passwordC">Mot de passe</label>
+            <label className="form-label" htmlFor="passwordC">Mot de passe</label>
             <input type="password" id="passwordC" className="form-control" style={{ "background": this.state.colPass }}
               onChange={event => {
                 handleChangeFocusAndBlur(event, tailleMDP, (e) => { this.setState({ colPass: e }) }, false);
