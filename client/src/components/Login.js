@@ -26,9 +26,16 @@ class Login extends Component {
     }
   }
 
+  componentDidMount() {
+    // Si l'utilisateur est loggé, on le redirige vers la page d'accueil utilisateur
+    if (this.props.auth.isAuthenticated) {
+      window.location.href = "/accueil";
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
-      //this.props.history.push("/dashboard"); // push user to dashboard when they login
+      window.location.href = "/accueil";
     }
     if (nextProps.errors) {
       this.setState({

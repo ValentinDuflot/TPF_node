@@ -1,7 +1,7 @@
-	 /** Author: Valentin DUFLOT
- * ce composant et les fonctions liées affichent un formulaire d'inscription
- * avec des vérifications de contenus qui changent la couleur des éléments du formulaire en fonction. 
- */
+/** Author: Valentin DUFLOT
+* ce composant et les fonctions liées affichent un formulaire d'inscription
+* avec des vérifications de contenus qui changent la couleur des éléments du formulaire en fonction. 
+*/
 
 // imports nécessaires
 import React, { Component } from 'react';
@@ -34,6 +34,13 @@ class Register extends Component {
             roleI: "employe",
             departementI: "",
             ageI: ""
+        }
+    }
+
+    componentDidMount() {
+        // Si l'utilisateur est loggé, on le redirige vers la page d'accueil utilisateur
+        if (this.props.auth.isAuthenticated) {
+            window.location.href = "/accueil";
         }
     }
 
