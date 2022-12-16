@@ -7,7 +7,11 @@
 import React, { Component } from 'react';
 import { isNotEmpty, checkMail, handleChangeFocusAndBlur } from '../LoginRegisterHelpers.js'
 
-export default class Login extends Component {
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { loginUser } from "../actions/authActions";
+
+class Login extends Component {
 
   constructor() {
     super();
@@ -22,17 +26,27 @@ export default class Login extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.isAuthenticated) {
+      //this.props.history.push("/dashboard"); // push user to dashboard when they login
+    }
+if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
+  }
+
   onChange = e => {
     this.setState({ [e.target.id]: e.target.value });
   };
   onSubmit = e => {
     e.preventDefault();
-    const newUser = {
-      mail: this.state.mailC,
-      password: this.state.passwordC
-
-    };
-    console.log(newUser);
+  const userData = {
+        mail: this.state.mailC,
+        password: this.state.passwordC
+      };
+    this.props.loginUser(userData); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
   };
 
   render() {
@@ -75,3 +89,17 @@ export default class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+export default connect(
+  mapStateToProps,
+  { loginUser }
+)(Login);

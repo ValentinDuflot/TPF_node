@@ -2,6 +2,9 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.1",
     "is-empty": "^1.2.0",
+    "react-redux": "^8.0.5",
+    "react-router": "^5.3.4",
+    "react-router-dom": "^5.3.4",
     "store": "^2.0.12"
   }
 }

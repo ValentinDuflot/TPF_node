@@ -1,8 +1,34 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+
+import {
+    useLocation,
+    useNavigate,
+    useParams
+} from "react-router-dom";
+import PropTypes from "prop-types";
+import { registerUser } from "../actions/authActions";
 
 import { isMajor, isNotEmpty, testMDP, testMails, checkMail, handleChangeFocusAndBlur } from '../LoginRegisterHelpers.js'
 
-export default class Register extends Component {
+function withRouter(Component) {
+    function ComponentWithRouterProp(props) {
+        let location = useLocation();
+        let navigate = useNavigate();
+        let params = useParams();
+        return (
+            <Component
+                {...props}
+                router={{ location, navigate, params }}
+            />
+        );
+    }
+
+    return ComponentWithRouterProp;
+}
+
+class Register extends Component {
     constructor() {
         super();
         // les variables d'état suivantes servent à gérer la colorisation des champs de formulaires.
@@ -21,22 +47,31 @@ export default class Register extends Component {
             mail2I: "",
             passwordI: "",
             password2I: "",
-            roleI: "",
+            roleI: "employe",
             departementI: "",
             ageI: ""
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.errors) {
+            this.setState({
+                errors: nextProps.errors
+            });
+        }
+    }
+
     onChange = e => {
-        if(e.target.id === "manager" || e.target.id === "employe") {
-            this.setState({ [this.state.roleI]: e.target.value });
+        if (e.target.id === "manager" || e.target.id === "employe") {
+            this.setState({ roleI: e.target.value });
         }
         else {
             this.setState({ [e.target.id]: e.target.value });
         }
-        
+
     };
-    onSubmit = e => { 
+    onSubmit = e => {
+        console.log(this.state.roleI);
         e.preventDefault();
         const newUser = {
             name: this.state.nameI,
@@ -49,6 +84,8 @@ export default class Register extends Component {
             age: this.state.ageI
 
         };
+        this.props.registerUser(newUser, this.props.history);
+
         console.log(newUser);
     };
 
@@ -69,7 +106,7 @@ export default class Register extends Component {
                             onChange={event => {
                                 handleChangeFocusAndBlur(event, checkMail, (e) => { this.setState({ colMail: e }) }, false);
                                 this.onChange(event);
-                            }} 
+                            }}
                             value={this.state.mailI}
                             onFocus={event => handleChangeFocusAndBlur(event, checkMail, (e) => { this.setState({ colMail: e }) }, false)}
                             onBlur={event => handleChangeFocusAndBlur(event, checkMail, (e) => { this.setState({ colMail: e }) }, true)}
@@ -152,11 +189,11 @@ export default class Register extends Component {
                         <label>Rôle</label>
                         <div>
                             <input type="radio" id="employe" name="radio" value="Employe"
-                                defaultChecked onChange={event => { this.onChange(event);}} />
+                                defaultChecked onChange={event => { this.onChange(event); }} />
                             <label for="employe">Employé</label>
                         </div>
                         <div>
-                            <input type="radio" id="manager" name="radio" value="Manager" onChange={event => { this.onChange(event);}} />
+                            <input type="radio" id="manager" name="radio" value="Manager" onChange={event => { this.onChange(event); }} />
                             <label for="Manager">Manager</label>
                         </div>
                     </div>
@@ -169,7 +206,7 @@ export default class Register extends Component {
                                 handleChangeFocusAndBlur(event, isNotEmpty, (e) => { this.setState({ colDep: e }) }, false);
                                 this.onChange(event);
                             }}
-                            value={this.state.departementI} 
+                            value={this.state.departementI}
                             onFocus={event => handleChangeFocusAndBlur(event, isNotEmpty, (e) => { this.setState({ colDep: e }) }, false)}
                             onBlur={event => handleChangeFocusAndBlur(event, isNotEmpty, (e) => { this.setState({ colDep: e }) }, true)}
                         />
@@ -183,3 +220,16 @@ export default class Register extends Component {
         );
     }
 }
+Register.propTypes = {
+    registerUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+    auth: state.auth,
+    errors: state.errors
+});
+
+
+export default connect(mapStateToProps, { registerUser })(withRouter(Register));

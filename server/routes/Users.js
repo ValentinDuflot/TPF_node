@@ -16,15 +16,16 @@ router.post("/register", (req, res) => {
     const { errors, isValid } = validateRegisterInput(req.body);
     // Check validation
     if (!isValid) {
+        console.log("ERR ", req.body);
         return res.status(400).json(errors);
     }
-    User.findOne({ email: req.body.email }).then(user => {
+    User.findOne({ mail: req.body.mail }).then(user => {
         if (user) {
-            return res.status(400).json({ email: "Email already exists" });
+            return res.status(400).json({ mail: "Email already exists" });
         } else {
             const newUser = new User({
                 name: req.body.name,
-                email: req.body.email,
+                mail: req.body.mail,
                 password: req.body.password,
                 role: req.body.role,
                 departement: req.body.departement
@@ -49,15 +50,16 @@ router.post("/login", (req, res) => {
     const { errors, isValid } = validateLoginInput(req.body);
     // Check validation
     if (!isValid) {
+        console.log("ERR ", req.body);
         return res.status(400).json(errors);
     }
-    const email = req.body.email;
+    const mail = req.body.mail;
     const password = req.body.password;
     // Find user by email
-    User.findOne({ email }).then(user => {
+    User.findOne({ mail }).then(user => {
         // Check if user exists
         if (!user) {
-            return res.status(404).json({ emailnotfound: "Email not found" });
+            return res.status(404).json({ mailnotfound: "Email not found" });
         }
         // Check password
         bcrypt.compare(password, user.password).then(isMatch => {
