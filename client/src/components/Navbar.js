@@ -3,19 +3,23 @@
  */
 
 // import nécessaire
-import React from 'react';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 // composant react simple
 export default function Navbar() {
     return (
-        <ul id="navbar" className="nav nav-tabs nav-justified" role="tablist">
-            <li className="nav-item active" role="presentation">
-                <a className="nav-link btn btn-block" data-toggle="tab" href="#connexion" aria-controls="login"
-                > Connexion </a>
-            </li>
+        <ul id="navbar" className="nav  nav-justified" role="tablist">
             <li className="nav-item" role="presentation">
-                <a className="nav-link btn btn-block" data-toggle="tab" href="#inscription" aria-controls="register"
-                > Inscription </a>
+                <Link to="/login" className="btn btn-primary btn-block" >
+                    Connexion
+                </Link>
+            </li>
+
+            <li className="nav-item" role="presentation">
+                <Link to="/register" className="btn btn-primary btn-block" >
+                    Inscription
+                </Link>
             </li>
         </ul>
     );

@@ -96,7 +96,7 @@ class Register extends Component {
     render() {
 
         return (
-            <div id="inscription" className="tab-pane fade" role="tabpanel" aria-labelledby="inscription">
+            <div id="inscription" role="tabpanel" aria-labelledby="inscription">
                 <form noValidate onSubmit={this.onSubmit}>
                     <h3> Inscription: </h3>
                     {/* MAIL */}
@@ -233,4 +233,4 @@ const mapStateToProps = state => ({
     errors: state.errors
 });
 
-export default connect(mapStateToProps, { registerUser })(withRouter(Register));
+export default connect(mapStateToProps, { registerUser })(Register);
