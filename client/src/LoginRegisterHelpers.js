@@ -25,6 +25,13 @@ export function testMDP(mdpA, mdpB) {
     return mdpA === mdpB ? true : false;
 }
 
+// teste si le mot de passe a la bonne taille
+export function tailleMDP(mdp) {
+    if(mdp.length < 6) { return false;}
+    if(mdp.length > 30) { return false;}
+    return true;
+}
+
 // teste si les deux mails spécifiés sont identiques
 export function testMails(mailA, mailB) {
     return mailA === mailB ? true : false;

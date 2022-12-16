@@ -5,7 +5,7 @@
 
 // imports nécessaires
 import React, { Component } from 'react';
-import { isNotEmpty, checkMail, handleChangeFocusAndBlur } from '../LoginRegisterHelpers.js'
+import { isNotEmpty, checkMail, handleChangeFocusAndBlur, tailleMDP } from '../LoginRegisterHelpers.js'
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -77,12 +77,12 @@ class Login extends Component {
             <label className="form-label" for="passwordC">Mot de passe</label>
             <input type="password" id="passwordC" className="form-control" style={{ "background": this.state.colPass }}
               onChange={event => {
-                handleChangeFocusAndBlur(event, isNotEmpty, (e) => { this.setState({ colPass: e }) }, false);
+                handleChangeFocusAndBlur(event, tailleMDP, (e) => { this.setState({ colPass: e }) }, false);
                 this.onChange(event);
               }}
               value={this.state.passC}
-              onFocus={event => handleChangeFocusAndBlur(event, isNotEmpty, (e) => { this.setState({ colPass: e }) }, false)}
-              onBlur={event => handleChangeFocusAndBlur(event, isNotEmpty, (e) => { this.setState({ colPass: e }) }, true)}
+              onFocus={event => handleChangeFocusAndBlur(event, tailleMDP, (e) => { this.setState({ colPass: e }) }, false)}
+              onBlur={event => handleChangeFocusAndBlur(event, tailleMDP, (e) => { this.setState({ colPass: e }) }, true)}
             />
           </div>
 

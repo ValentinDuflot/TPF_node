@@ -12,7 +12,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { registerUser } from "../actions/authActions";
 
-import { isMajor, isNotEmpty, testMDP, testMails, checkMail, handleChangeFocusAndBlur } from '../LoginRegisterHelpers.js'
+import { isMajor, isNotEmpty, testMDP, testMails, checkMail, handleChangeFocusAndBlur, tailleMDP } from '../LoginRegisterHelpers.js'
 
 // définition de la fonction withRouter puisque supprimée de la dernière version de react-router-dom
 function withRouter(Component) {
@@ -131,11 +131,11 @@ class Register extends Component {
                         <label className="form-label" for="passwordI">Mot de passe</label>
                         <input type="password" id="passwordI" className="form-control" style={{ "background": this.state.colPass }}
                             onChange={event => {
-                                handleChangeFocusAndBlur(event, isNotEmpty, (e) => { this.setState({ colPass: e }) }, false);
+                                handleChangeFocusAndBlur(event, tailleMDP, (e) => { this.setState({ colPass: e }) }, false);
                                 this.onChange(event);
                             }}
-                            value={this.state.passwordI} onFocus={event => handleChangeFocusAndBlur(event, isNotEmpty, (e) => { this.setState({ colPass: e }) }, false)}
-                            onBlur={event => handleChangeFocusAndBlur(event, isNotEmpty, (e) => { this.setState({ colPass: e }) }, true)}
+                            value={this.state.passwordI} onFocus={event => handleChangeFocusAndBlur(event, tailleMDP, (e) => { this.setState({ colPass: e }) }, false)}
+                            onBlur={event => handleChangeFocusAndBlur(event, tailleMDP, (e) => { this.setState({ colPass: e }) }, true)}
                         />
                     </div>
 
