@@ -1,27 +1,34 @@
+/** Author: Valentin DUFLOT
+ * Ceci sert à vérifier les informations recues dans le corps d'une requete POST pour register
+ */
+
+// imports requis
 const Validator = require("validator");
 const isEmpty = require("is-empty");
 
 module.exports = function validateRegisterInput(data) {
-    
     let errors = {};
-    // Convert empty fields to an empty string so we can use validator functions
+    // Convertit les champs vides en chaines vides pour pouvoir utiliser la fonction validator
     data.name = !isEmpty(data.name) ? data.name : "";
     data.mail = !isEmpty(data.mail) ? data.mail : "";
     data.password = !isEmpty(data.password) ? data.password : "";
     data.password2 = !isEmpty(data.password2) ? data.password2 : "";
     data.role = !isEmpty(data.role) ? data.role : "";
     data.departement = !isEmpty(data.departement) ? data.departement : "";
-    // Name checks
+
+    // NOM
     if (Validator.isEmpty(data.name)) {
         errors.name = "Name field is required";
     }
-    // Email checks
+
+    // MAIL
     if (Validator.isEmpty(data.mail)) {
         errors.mail = "Email field is required";
     } else if (!Validator.isEmail(data.mail)) {
         errors.mail = "Email is invalid";
     }
-    // Password checks
+
+    // PASS
     if (Validator.isEmpty(data.password)) {
         errors.password = "Password field is required";
     }
@@ -34,15 +41,18 @@ module.exports = function validateRegisterInput(data) {
     if (!Validator.equals(data.password, data.password2)) {
         errors.password2 = "Passwords must match";
     }
-    // role checks
+
+    // ROLE
     if (Validator.isEmpty(data.role)) {
         errors.role = "role field is required";
     }
-    // departement checks
+
+    // DEPARTEMENT
     if (Validator.isEmpty(data.departement)) {
         errors.departement = "departement field is required";
     }
-    return { 
+
+    return {
         errors,
         isValid: isEmpty(errors)
     };

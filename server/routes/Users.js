@@ -1,28 +1,40 @@
+/** Author: Valentin DUFLOT
+ * 
+*/
+
+// imports requis
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
 const keys = require("../config/keys");
 
-// Load input validation
+// import des fonctions de validation de requetes
 const validateRegisterInput = require("../controllers/register");
 const validateLoginInput = require("../controllers/login");
-// Load User model
+
+// import du modèle User
 const User = require("../models/User")
 
+
+// traitement des requetes POST de register
 router.post("/register", (req, res) => {
-    // Form validation
+
+    // Validation des informations du formulaire
     const { errors, isValid } = validateRegisterInput(req.body);
-    // Check validation
+
+    // Renvoi code 400 si invalidité
     if (!isValid) {
-        console.log("ERR ", req.body);
         return res.status(400).json(errors);
     }
+
+    // On cherche si un utilisateur à ce mail existe déjà
     User.findOne({ mail: req.body.mail }).then(user => {
+        // s'il existe déjà, renvoi code 400
         if (user) {
             return res.status(400).json({ mail: "Email already exists" });
         } else {
+            // sinon, création de l'utilisateur
             const newUser = new User({
                 name: req.body.name,
                 mail: req.body.mail,
@@ -30,7 +42,7 @@ router.post("/register", (req, res) => {
                 role: req.body.role,
                 departement: req.body.departement
             });
-            // Hash password before saving in database
+            // on ne sauvegarde pas le pass en clair, on le hash
             bcrypt.genSalt(10, (err, salt) => {
                 bcrypt.hash(newUser.password, salt, (err, hash) => {
 
@@ -45,46 +57,53 @@ router.post("/register", (req, res) => {
     });
 });
 
+// traitement des requestes POST de login
 router.post("/login", (req, res) => {
-    // Form validation
+
+    // validation de formulaire
     const { errors, isValid } = validateLoginInput(req.body);
-    // Check validation
+
+    // renvoi code 400 si invalidité
     if (!isValid) {
         console.log("ERR ", req.body);
         return res.status(400).json(errors);
     }
+
     const mail = req.body.mail;
     const password = req.body.password;
-    // Find user by email
+    // recherche dans le bdd d'un utilisateur avec ce mail
     User.findOne({ mail }).then(user => {
-        // Check if user exists
+
+        // si inexistant, code 400
         if (!user) {
             return res.status(404).json({ mailnotfound: "Email not found" });
         }
-        // Check password
+
+        // si existant, on compare son MDP
         bcrypt.compare(password, user.password).then(isMatch => {
             if (isMatch) {
-                // User matched
-                // Create JWT Payload
+                // Correspondance, donc on enregistre les informations de l'utilisateur
                 const payload = {
                     id: user.id,
                     name: user.name
                 };
-                // Sign token
+                // et on crée un token d'authentification
                 jwt.sign(
                     payload,
                     keys.secretOrKey,
                     {
-                        expiresIn: 31556926 // 1 year in seconds
+                        expiresIn: 31556926 // une année en secondes
                     },
                     (err, token) => {
                         res.json({
                             success: true,
-                            token: "Bearer " + token
+                            token: "tkn " + token
                         });
                     }
                 );
-            } else {
+            }
+            // mot de passe incorrect, code 400
+            else {
                 return res
                     .status(400)
                     .json({ passwordincorrect: "Password incorrect" });
