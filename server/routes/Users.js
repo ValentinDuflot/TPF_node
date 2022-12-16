@@ -40,7 +40,8 @@ router.post("/register", (req, res) => {
                 mail: req.body.mail,
                 password: req.body.password,
                 role: req.body.role,
-                departement: req.body.departement
+                departement: req.body.departement,
+                age:req.body.age
             });
             // on ne sauvegarde pas le pass en clair, on le hash
             bcrypt.genSalt(10, (err, salt) => {

@@ -4,6 +4,7 @@
 
 //imports requis
 const mongoose = require("mongoose");
+const internal = require("stream");
 const Schema = mongoose.Schema;
 
 //définition du schéma UserSchema
@@ -13,7 +14,8 @@ const UserSchema = new Schema({
     password: String,
     name: String,
     role: String,
-    departement: String
+    departement: String,
+    age: Number
 })
 
 // création du module User.
