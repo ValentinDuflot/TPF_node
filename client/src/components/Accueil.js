@@ -11,6 +11,17 @@ import { connect } from "react-redux";
 
 // composant React simple
 class Accueil extends Component {
+
+    constructor() {
+        super();
+    }
+    componentDidMount() {
+        // Si l'utilisateur n'est pas loggé, on le redirige vers la page de connexion
+        if (!this.props.auth.isAuthenticated) {
+            window.location.href = "/login";
+        }
+    }
+
     // lors du clic sur le bouton de déconnexion
     onLogoutClick = e => {
         // on log out l'utilisateur et le redirige vers la page de login
@@ -18,6 +29,7 @@ class Accueil extends Component {
         this.props.logoutUser();
         window.location.href = "/login";
     };
+    
 
     // affichage simple.
     render() {
