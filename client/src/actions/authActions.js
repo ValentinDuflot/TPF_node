@@ -1,13 +1,18 @@
+/** Author: Valentin DUFLOT
+ * On définit ici certaines fonctions essentielles à l'authentification et à l'inscription
+ */
+
+
+// imports nécessaires
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
-import {GET_ERRORS,SET_CURRENT_USER,USER_LOADING} from "./types";
+import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types";
 
 
 
-// Register User
+// Inscription, par requete POST
 export const registerUser = (userData, history) => dispatch => {
-    
     axios
         .post("http://127.0.0.1:5000/routes/users/register", userData)
         .then(res => history.push("/")) // re-direct to login on successful register
@@ -15,26 +20,24 @@ export const registerUser = (userData, history) => dispatch => {
             dispatch({
                 type: GET_ERRORS,
                 payload: err
-                
+
             })
         );
 };
 
-// Login - get user token
+// Connexion, par requête POST, et création de token de connexion 
 export const loginUser = userData => dispatch => {
     axios
         .post("http://127.0.0.1:5000/routes/users/login", userData)
         .then(res => {
-            // Save to localStorage
-            // Set token to localStorage
+            // enregistrement du token
             const { token } = res.data;
             localStorage.setItem("jwtToken", token);
-            // Set token to Auth header
             setAuthToken(token);
-            // Decode token to get user data
+            // décodage du token pour obtenir les données utilisateur
             const decoded = jwt_decode(token);
-            // Set current user
-            dispatch(setCurrentUser(decoded));
+            // renvoi des données utilisateur
+            dispatch({ type: SET_CURRENT_USER, payload: decoded });
         })
         .catch(err =>
             dispatch({
@@ -43,25 +46,18 @@ export const loginUser = userData => dispatch => {
             })
         );
 };
-// Set logged in user
-export const setCurrentUser = decoded => {
-    return {
-        type: SET_CURRENT_USER,
-        payload: decoded
-    };
-};
-// User loading
+
 export const setUserLoading = () => {
     return {
         type: USER_LOADING
     };
 };
-// Log user out
+
+// déconnexion
 export const logoutUser = () => dispatch => {
-    // Remove token from local storage
+    // suppression du token de connexion
     localStorage.removeItem("jwtToken");
-    // Remove auth header for future requests
     setAuthToken(false);
-    // Set current user to empty object {} which will set isAuthenticated to false
+    // définition du currentUser sur un objet vide.
     dispatch(setCurrentUser({}));
 };

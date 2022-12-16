@@ -1,10 +1,17 @@
+/** Author: Valentin DUFLOT
+ * définition du token de connexion
+ */
+
+// import nécessaire
 import axios from "axios";
+
+
 const setAuthToken = token => {
     if (token) {
-        // Apply authorization token to every request if logged in
+        // applique un token de connexion à chaque requête si l'utilisateur est connecté
         axios.defaults.headers.common["Authorization"] = token;
     } else {
-        // Delete auth header
+        // détruit le token de connexion sinon
         delete axios.defaults.headers.common["Authorization"];
     }
 };

@@ -1,5 +1,5 @@
 /** Author: Valentin DUFLOT
- * ce composant et les fonctions liées affiche un formulaire de connexion, un formulaire d'inscription, switchables
+ * ce composant et les fonctions liées affichent un formulaire de connexion
  * avec des vérifications de contenus qui changent la couleur des éléments du formulaire en fonction. 
  */
 
@@ -30,25 +30,29 @@ class Login extends Component {
     if (nextProps.auth.isAuthenticated) {
       //this.props.history.push("/dashboard"); // push user to dashboard when they login
     }
-if (nextProps.errors) {
+    if (nextProps.errors) {
       this.setState({
         errors: nextProps.errors
       });
     }
   }
 
+  // en cas de changement dans le contenu d'un champ du formulaire, on l'enregistre dans la variable d'état correspondante
   onChange = e => {
     this.setState({ [e.target.id]: e.target.value });
   };
+
+  // en cas d'envoi du formulaire, on utilise la fonction loginUser pour requeter la BDD
   onSubmit = e => {
     e.preventDefault();
-  const userData = {
-        mail: this.state.mailC,
-        password: this.state.passwordC
-      };
-    this.props.loginUser(userData); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
+    const userData = {
+      mail: this.state.mailC,
+      password: this.state.passwordC
+    };
+    this.props.loginUser(userData);
   };
 
+  // affichage du composant
   render() {
     return (
       <div id="connexion" className="tab-pane fade in active" role="tabpanel" aria-labelledby="connexion">
@@ -90,6 +94,8 @@ if (nextProps.errors) {
   }
 }
 
+
+// informations nécessaires à la transformation du composant en composant apte à requeter la BDD via l'export spécifique ci-dessous
 Login.propTypes = {
   loginUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
@@ -99,7 +105,4 @@ const mapStateToProps = state => ({
   auth: state.auth,
   errors: state.errors
 });
-export default connect(
-  mapStateToProps,
-  { loginUser }
-)(Login);
+export default connect(mapStateToProps, { loginUser })(Login);

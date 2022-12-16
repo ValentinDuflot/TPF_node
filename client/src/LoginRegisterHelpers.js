@@ -1,3 +1,6 @@
+/** Author: Valentin DUFLOT
+ * ces fonctions servent à la logique de colorisation des champs des deux formulaires 
+ */
 
 // teste si l'age est >= 18
 export function isMajor(age) {

@@ -1,14 +1,20 @@
-import {SET_CURRENT_USER,USER_LOADING} from "../actions/types";
+/** Author: Valentin DUFLOT
+ * définition du reducer pour l'authentification
+ */
+
+// import nécessaire
+import { SET_CURRENT_USER, USER_LOADING } from "../actions/types";
 
 const isEmpty = require("is-empty");
 
+// définition de l'état initial
 const initialState = {
     isAuthenticated: false,
     user: {},
     loading: false
 };
 
-export default function authReducer (state = initialState, action) {
+export default function authReducer(state = initialState, action) {
     switch (action.type) {
         case SET_CURRENT_USER:
             return {

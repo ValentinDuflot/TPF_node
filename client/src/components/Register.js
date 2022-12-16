@@ -1,17 +1,20 @@
+/** Author: Valentin DUFLOT
+ * ce composant et les fonctions liées affichent un formulaire d'inscription
+ * avec des vérifications de contenus qui changent la couleur des éléments du formulaire en fonction. 
+ */
+
+// imports nécessaires
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 
-import {
-    useLocation,
-    useNavigate,
-    useParams
-} from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { registerUser } from "../actions/authActions";
 
 import { isMajor, isNotEmpty, testMDP, testMails, checkMail, handleChangeFocusAndBlur } from '../LoginRegisterHelpers.js'
 
+// définition de la fonction withRouter puisque supprimée de la dernière version de react-router-dom
 function withRouter(Component) {
     function ComponentWithRouterProp(props) {
         let location = useLocation();
@@ -32,7 +35,6 @@ class Register extends Component {
     constructor() {
         super();
         // les variables d'état suivantes servent à gérer la colorisation des champs de formulaires.
-        // les variables d'état pour le formulaire d'inscription
         this.state = {
             colMail: "white",
             colMailConf: "white",
@@ -61,6 +63,7 @@ class Register extends Component {
         }
     }
 
+    // en cas de changement dans le contenu d'un champ du formulaire, on l'enregistre dans la variable d'état correspondante
     onChange = e => {
         if (e.target.id === "manager" || e.target.id === "employe") {
             this.setState({ roleI: e.target.value });
@@ -70,6 +73,8 @@ class Register extends Component {
         }
 
     };
+
+    // en cas d'envoi du formulaire, on utilise la fonction registerUser pour requeter la BDD et eventuellement créer l'utilisateur
     onSubmit = e => {
         console.log(this.state.roleI);
         e.preventDefault();
@@ -85,17 +90,12 @@ class Register extends Component {
 
         };
         this.props.registerUser(newUser, this.props.history);
-
-        console.log(newUser);
     };
 
-
-
+    // affichage du composant
     render() {
 
         return (
-            // les variables d'état pour le formulaire d'inscription
-
             <div id="inscription" className="tab-pane fade" role="tabpanel" aria-labelledby="inscription">
                 <form noValidate onSubmit={this.onSubmit}>
                     <h3> Inscription: </h3>
@@ -220,6 +220,8 @@ class Register extends Component {
         );
     }
 }
+
+// informations nécessaires à la transformation du composant en composant apte à requeter la BDD via l'export spécifique ci-dessous
 Register.propTypes = {
     registerUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
@@ -230,6 +232,5 @@ const mapStateToProps = state => ({
     auth: state.auth,
     errors: state.errors
 });
-
 
 export default connect(mapStateToProps, { registerUser })(withRouter(Register));

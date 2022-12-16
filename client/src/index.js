@@ -1,3 +1,10 @@
+/** Author: Valentin DUFLOT
+ * Initialisation de la page d'acceuil de l'application
+ * contenant la navbar (connexion/inscription)
+ * et l'un des deux formulaires
+ */
+
+// imports nécessaires
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
@@ -10,18 +17,19 @@ import Register from './components/Register';
 import { BrowserRouter } from 'react-router-dom';
 
 
+// affichage du contenu.
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Navbar />
     <Provider store={store}>
       <BrowserRouter>
-      <div className="container-fluid nav-justified" >
-        <div className="tab-content">
-          <Login />
-          <Register />
+        <div className="container-fluid nav-justified" >
+          <div className="tab-content">
+            <Login />
+            <Register />
+          </div>
         </div>
-      </div>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>
