@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.9.1",
+    "is-empty": "^1.2.0",
+    "store": "^2.0.12"
+  }
+}
