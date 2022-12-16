@@ -7,29 +7,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-
-import { useLocation, useNavigate, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { registerUser } from "../actions/authActions";
 
 import { isMajor, isNotEmpty, testMDP, testMails, checkMail, handleChangeFocusAndBlur, tailleMDP } from '../LoginRegisterHelpers.js'
 
-// définition de la fonction withRouter puisque supprimée de la dernière version de react-router-dom
-function withRouter(Component) {
-    function ComponentWithRouterProp(props) {
-        let location = useLocation();
-        let navigate = useNavigate();
-        let params = useParams();
-        return (
-            <Component
-                {...props}
-                router={{ location, navigate, params }}
-            />
-        );
-    }
-
-    return ComponentWithRouterProp;
-}
 
 class Register extends Component {
     constructor() {
