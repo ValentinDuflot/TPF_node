@@ -60,7 +60,7 @@ export default class Register extends Component {
             // les variables d'état pour le formulaire d'inscription
 
             <div id="inscription" className="tab-pane fade" role="tabpanel" aria-labelledby="inscription">
-                <form>
+                <form noValidate onSubmit={this.onSubmit}>
                     <h3> Inscription: </h3>
                     {/* MAIL */}
                     <div className="form-group">
