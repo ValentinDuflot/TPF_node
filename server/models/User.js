@@ -4,7 +4,6 @@
 
 //imports requis
 const mongoose = require("mongoose");
-const internal = require("stream");
 const Schema = mongoose.Schema;
 
 //définition du schéma UserSchema

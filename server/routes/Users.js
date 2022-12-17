@@ -1,5 +1,5 @@
 /** Author: Valentin DUFLOT
- * 
+ * Gestion des routes et des requêtes liées aux Users, donc /register/POST et /login/POST
 */
 
 // imports requis
