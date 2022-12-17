@@ -91,4 +91,31 @@ router.get("/getAbsenceByUser", (req, res) => {
     }
 });
 
+
+// traitement des requetes GET de getAbsenceByDepartement
+router.get("/getAbsenceByDepartement", (req, res) => {
+
+    // on vérifie qu'on a reçu un département
+    if (!isEmpty(req.body.departement)) {
+
+        // on cherche tous les utilisateurs de ce département
+        User.find({ departement: req.body.departement }).exec().then(users => {
+            
+            let listeUtilisateurs = [];
+            users.map((d,k) => {
+                listeUtilisateurs.push(d._id);
+            })
+            
+            Absence.find({ idUser : {$in : listeUtilisateurs}})
+            .exec()
+            .then(function (absence) {
+                res.send(absence);
+            })
+        });
+    } 
+    else {
+        return res.status(400).json({ mail: "specify a departement" });
+    }
+});
+
 module.exports = router;
