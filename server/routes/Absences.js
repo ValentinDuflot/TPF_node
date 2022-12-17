@@ -16,7 +16,8 @@ const validateAbsenceInput = require("../controllers/absence");
 
 // import des modèles nécessaires
 const Absence = require("../models/Absence")
-const User = require("../models/User")
+const User = require("../models/User");
+const isEmpty = require("is-empty");
 
 
 // traitement des requetes POST de addAbsence
@@ -44,24 +45,50 @@ router.post("/addAbsence", (req, res) => {
             });
 
             newAbsence
-        .save()
-        .then(user => res.json(user))
-        .catch(err => console.log(err));
+                .save()
+                .then(user => res.json(user))
+                .catch(err => console.log(err));
         }
         // s'il n'existe pas, renvoi code 400
         else {
             return res.status(400).json({ mail: "no user found" });
         }
     })
-    
+
 });
 
 // traitement des requetes GET de getAbsence
-router.get("/getAbsence", (req,res) => {
+router.get("/getAbsence", (req, res) => {
     const liste = Absence
-    .find({})
-    .then(function(absence) {
-        res.send(absence);
-    })
+        .find({})
+        .then(function (absence) {
+            res.send(absence);
+        })
 });
+
+// traitement des requetes GET de getAbsenceByUser
+router.get("/getAbsenceByUser", (req, res) => {
+    if (!isEmpty(req.body.idUser)) {
+
+        // on vérifie qu'il existe un utilisateur à l'ID spécifié
+        User.findOne({ _id: req.body.idUser }).then(user => {
+            // s'il existe, on poursuit
+            if (user) {
+                const liste = Absence
+                    .find({ idUser: req.body.idUser })
+                    .exec()
+                    .then(function (absence) {
+                        res.send(absence);
+                    })
+            }
+            else {
+                return res.status(400).json({ mail: "no user found" });
+            }
+        });
+    }
+    else {
+        return res.status(400).json({ mail: "specify a user id" });
+    }
+});
+
 module.exports = router;
