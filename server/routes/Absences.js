@@ -1,5 +1,7 @@
 /** Author: Valentin DUFLOT
- * Gestion des routes et des requêtes liées aux Absences, donc /addAbsence/POST 
+ * Gestion des routes et des requêtes liées aux Absences, donc:
+ * /addAbsence (POST)
+ * /getAbsence (GET)
 */
 
 // imports requis
@@ -54,5 +56,12 @@ router.post("/addAbsence", (req, res) => {
     
 });
 
-
+// traitement des requetes GET de getAbsence
+router.get("/getAbsence", (req,res) => {
+    const liste = Absence
+    .find({})
+    .then(function(absence) {
+        res.send(absence);
+    })
+});
 module.exports = router;
