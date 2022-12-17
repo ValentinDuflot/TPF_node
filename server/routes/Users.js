@@ -85,7 +85,7 @@ router.post("/login", (req, res) => {
             if (isMatch) {
                 // Correspondance, donc on enregistre les informations de l'utilisateur
                 const payload = {
-                    id: user.id,
+                    _id: user._id,
                     name: user.name
                 };
                 // et on crée un token d'authentification

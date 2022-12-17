@@ -36,12 +36,7 @@ module.exports = function validateAbsenceInput(data) {
     if (Validator.isEmpty(data.validation)) {
         errors.validation = "validation field is required";
     }
-    // commentaire
-    if (Validator.isEmpty(data.commentaire)) {
-        errors.commentaire = "commentaire field is required";
-    }
 
-    
     return {
         errors,
         isValid: isEmpty(errors)

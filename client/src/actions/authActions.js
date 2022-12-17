@@ -15,7 +15,7 @@ import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types";
 export const registerUser = (userData, history) => dispatch => {
     axios
         .post("http://127.0.0.1:5000/routes/users/register", userData)
-        .then(res => history.push("/")) // re-direct to login on successful register
+        .then(res => history.push("/"))
         .catch(err =>
             dispatch({
                 type: GET_ERRORS,

@@ -8,6 +8,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { logoutUser } from "../actions/authActions"
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 // composant React simple
 class Accueil extends Component {
@@ -37,6 +38,9 @@ class Accueil extends Component {
             <div>
                 <h1>ACCUEIL</h1>
                 <button onClick={this.onLogoutClick}> déconnexion </button>
+                <Link to="/addAbsence" className="btn btn-primary btn-block" >
+                    ajouter absence
+                </Link>
             </div>
         );
     }
