@@ -100,21 +100,74 @@ router.get("/getAbsenceByDepartement", (req, res) => {
 
         // on cherche tous les utilisateurs de ce département
         User.find({ departement: req.body.departement }).exec().then(users => {
-            
+
+            // on enregistre les ID de chaque utilisateur trouvé
             let listeUtilisateurs = [];
-            users.map((d,k) => {
+            users.map((d, k) => {
                 listeUtilisateurs.push(d._id);
             })
-            
-            Absence.find({ idUser : {$in : listeUtilisateurs}})
+
+            Absence.find({ idUser: { $in: listeUtilisateurs } })
+                .exec()
+                .then(function (absence) {
+                    res.send(absence);
+                })
+        });
+    }
+    else {
+        return res.status(400).json({ mail: "specify a departement" });
+    }
+});
+
+
+
+// traitement des requetes GET de getAbsenceByType
+router.get("/getAbsenceByType", (req, res) => {
+    if (!isEmpty(req.body.typeConge)) {
+        Absence
+            .find({ typeConge: req.body.typeConge })
             .exec()
             .then(function (absence) {
                 res.send(absence);
             })
-        });
-    } 
+    }
     else {
-        return res.status(400).json({ mail: "specify a departement" });
+        return res.status(400).json({ mail: "specify a typeConge" });
+    }
+});
+
+//traitement POST modifierAbsence
+router.post("/modifierAbsence", (req, res) => {
+
+    // on vérifie qu'on a reçu une absence à modifier
+    if (!isEmpty(req.body._id)) {
+        Absence.findByIdAndUpdate(req.body._id, req.body)
+            .exec()
+            .then(function (absence) {
+                res.send(absence);
+            })
+
+    }
+    else {
+        return res.status(400).json({ mail: "specify a _id" });
+    }
+
+});
+
+
+//traitement POST deleteAbsence
+router.post("/deleteAbsence", (req, res) => {
+
+    // on vérifie qu'on a reçu une absence à supprimer
+    if (!isEmpty(req.body._id)) {
+        Absence.findByIdAndDelete(req.body._id, req.body)
+            .exec()
+            .then(function (absence) {
+                return res.send(absence);
+            })
+    }
+    else {
+        return res.status(400).json({ mail: "specify a _id" });
     }
 });
 
