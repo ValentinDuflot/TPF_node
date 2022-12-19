@@ -26,7 +26,10 @@ const Display = (props) => {
     const reqData = {
         idUser: props.auth.user._id,
         typeConge: "CP"
-
+    };
+    const reqDataRtt = {
+        idUser: props.auth.user._id,
+        typeConge: "RTTe"
     };
 
     return (
@@ -73,6 +76,8 @@ const Display = (props) => {
                 </tbody>
             </table>
             <p>{props.obtenirNombreAbsencesRestants(reqData)} jours de congés payés restants</p>
+            <p>{props.obtenirNombreAbsencesRestants(reqDataRtt) -19} RTT restants</p>
+            
         </div>
     )
 }

@@ -101,5 +101,6 @@ export const obtenirNombreAbsencesRestants = data => dispatch => {
                 })
             )
     }, [])
+    
     return 25-resultat;
 }
