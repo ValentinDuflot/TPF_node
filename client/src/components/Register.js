@@ -78,6 +78,8 @@ class Register extends Component {
 
         };
         this.props.registerUser(newUser, this.props.history);
+        alert("Inscription réussie");
+        window.location.href = "/login";
     };
 
     // affichage du composant

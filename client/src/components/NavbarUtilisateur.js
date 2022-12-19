@@ -49,6 +49,7 @@ class NavbarUtilisateur extends Component {
                     </ul>
 
                     <button onClick={this.onLogoutClick}> déconnexion </button>
+                    <p>{this.props.auth.user.role}</p>
                 </div>
 
             )
@@ -91,6 +92,7 @@ class NavbarUtilisateur extends Component {
                         </li>
                     </ul>
                     <button onClick={this.onLogoutClick}> déconnexion </button>
+                    <p>{this.props.auth.user.role}</p>
                 </div>
             )
         }
@@ -112,6 +114,7 @@ class NavbarUtilisateur extends Component {
                         </li>
                     </ul>
                     <button onClick={this.onLogoutClick}> déconnexion </button>
+                    <p>{this.props.auth.user.role}</p>
                 </div>
             )
         }

@@ -6,7 +6,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from 'react-redux';
-import { obtenirAbsenceByUser } from '../actions/absenceActions'
+import { obtenirAbsenceByUser, obtenirNombreAbsencesRestants } from '../actions/absenceActions'
 import NavbarUtilisateur from "./NavbarUtilisateur";
 
 function format(date) {
@@ -23,11 +23,19 @@ const Display = (props) => {
 
     let liste = props.obtenirAbsenceByUser(userData);
 
+    const reqData = {
+        idUser: props.auth.user._id,
+        typeConge: "CP"
+    };
+    const reqDataRtt = {
+        idUser: props.auth.user._id,
+        typeConge: "RTTe"
+    };
 
     return (
         <div>
-            <NavbarUtilisateur/>
-                
+            <NavbarUtilisateur />
+
 
             <table className="table">
                 <thead>
@@ -67,7 +75,9 @@ const Display = (props) => {
                     )}
                 </tbody>
             </table>
-
+            <p>{props.obtenirNombreAbsencesRestants(reqData)} jours de congés payés restants</p>
+            <p>{props.obtenirNombreAbsencesRestants(reqDataRtt) -19} RTT restants</p>
+            
         </div>
     )
 }
@@ -85,4 +95,4 @@ const mapStateToProps = state => ({
     errors: state.errors
 });
 
-export default connect(mapStateToProps, { obtenirAbsenceByUser })(Display);
+export default connect(mapStateToProps, { obtenirAbsenceByUser, obtenirNombreAbsencesRestants })(Display);

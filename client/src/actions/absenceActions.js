@@ -32,6 +32,25 @@ export const obtenirAbsenceByUser = data => dispatch => {
             .post("http://127.0.0.1:5000/routes/absences/getAbsenceByUser", data)
             .then(res => {
                 setListe(res.data)
+            })
+            .catch(err =>
+                dispatch({
+                    type: GET_ERRORS,
+                    payload: err
+                })
+            ) 
+    }, [])
+
+    return liste;
+}
+
+export const obtenirNombreAbsences = data => dispatch => {
+    const [resultat, setResultat] = useState([]);
+    useEffect(() => {
+        axios
+            .post("http://127.0.0.1:5000/routes/absences/getNombreAbsences", data)
+            .then(res => {
+                setResultat(res.data)
             }
             )
             .catch(err =>
@@ -41,6 +60,47 @@ export const obtenirAbsenceByUser = data => dispatch => {
                 })
             )
     }, [])
+    return resultat;
+}
 
-    return liste;
+export const obtenirNombreAbsencesValidees = data => dispatch => {
+    
+    const [resultat, setResultat] = useState([]);
+
+    useEffect(() => {
+        axios
+            .post("http://127.0.0.1:5000/routes/absences/getNombreAbsencesValidees", data)
+            .then(res => {
+                setResultat(res.data) 
+            }
+            )
+            .catch(err =>
+                dispatch({
+                    type: GET_ERRORS,
+                    payload: err
+                })
+            )
+    }, [])
+    return resultat;
+}
+export const obtenirNombreAbsencesRestants = data => dispatch => {
+    
+    const [resultat, setResultat] = useState([]);
+
+    useEffect(() => {
+        axios
+            .post("http://127.0.0.1:5000/routes/absences/getNombreAbsencesValidees", data)
+            .then(res => {
+                setResultat(res.data) 
+            }
+            )
+            .catch(err =>
+                dispatch({
+                    type: GET_ERRORS,
+                    payload: err
+                })
+            )
+    }, [])
+    
+    return 25-resultat;
 }

@@ -10,6 +10,8 @@ import PropTypes from "prop-types";
 import { addAbsence } from "../actions/absenceActions";
 
 import { isNotEmpty, handleChangeFocusAndBlur } from '../LoginRegisterHelpers.js'
+import NavbarUtilisateur from './NavbarUtilisateur';
+import { Link } from 'react-router-dom';
 
 
 class AddAbsence extends Component {
@@ -17,7 +19,7 @@ class AddAbsence extends Component {
         super();
         var date = new Date();
         var currDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-        
+
         // les variables d'état suivantes servent à gérer la colorisation des champs de formulaires.
         this.state = {
             colComm: "white",
@@ -74,6 +76,9 @@ class AddAbsence extends Component {
 
         return (
             <div id="inscription" role="tabpanel" aria-labelledby="inscription">
+
+                <NavbarUtilisateur />
+
                 <form noValidate onSubmit={this.onSubmit}>
                     <h3> Ajout de congé: </h3>
 
@@ -109,11 +114,15 @@ class AddAbsence extends Component {
                             onChange={event => {
                                 this.onChange(event);
                             }}>
-                            <option value="RTT">RTT</option>
-                            <option value="CP">Congé payé</option>
-                            <option value="CSS">Congé sans solde</option>
-                            <option value="M">Mission</option>
-                            <option value="JF">Jour férié</option>
+                            {(this.props.auth.user.role !== "Admin" && <option value="RTTe">RTT Employé</option>)}
+
+                            {(this.props.auth.user.role === "Manager" && <option value="RTTm">RTT Employeur</option>)}
+
+                            {(this.props.auth.user.role !== "Admin" && <option value="CP">Congé payé</option>)}
+                            {(this.props.auth.user.role !== "Admin" && <option value="CSS">Congé sans solde</option>)}
+                            {(this.props.auth.user.role !== "Admin" && <option value="M">Mission</option>)}
+
+                            {(this.props.auth.user.role === "Admin" && <option value="JF">Jour férié</option>)}
                         </select>
                     </div>
 
@@ -133,6 +142,9 @@ class AddAbsence extends Component {
 
                     {/* ENVOYER */}
                     <button type="submit" id="buttonSubmit" className="btn btn-primary btn-block">Ajout</button>
+                    <Link to="/display" className="btn btn-primary btn-block" >
+                        Retour à l'accueil
+                    </Link>
 
                 </form>
             </div>
