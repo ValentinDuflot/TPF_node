@@ -38,11 +38,12 @@ if (localStorage.jwtToken) {
   const currentTime = Date.now() / 1000; // to get in milliseconds
   if (decoded.exp < currentTime) {
     // Logout user
-    store.dispatch(logoutUser());
+    store.dispatch(logoutUser()); 
     // Redirect to login
     window.location.href = "./login";
   }
 }
+
 
 // affichage du contenu.
 const root = ReactDOM.createRoot(document.getElementById('root'));

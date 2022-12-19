@@ -154,7 +154,6 @@ router.post("/modifierAbsence", (req, res) => {
 
 });
 
-
 //traitement POST deleteAbsence
 router.post("/deleteAbsence", (req, res) => {
 
