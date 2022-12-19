@@ -181,9 +181,9 @@ router.post("/getNombreAbsences", (req, res) => {
                 // s'il existe, on poursuit
                 if (user) {
                     Absence
-                    .countDocuments({ idUser: req.body.idUser, typeConge: req.body.typeConge })
-                    .exec()
-                    .then( resultat => res.send(""+resultat))//il faut convertir le resultat en string sinon res.send ne fonctionne pas
+                        .countDocuments({ idUser: req.body.idUser, typeConge: req.body.typeConge })
+                        .exec()
+                        .then(resultat => res.send("" + resultat))//il faut convertir le resultat en string sinon res.send ne fonctionne pas
                 }
                 else {
                     console.log("no user found");
@@ -191,13 +191,13 @@ router.post("/getNombreAbsences", (req, res) => {
                 }
             });
     }
-    else { 
+    else {
         console.log("specify a user id");
         return res.status(400).json({ userId: "specify a user id" });
-    } 
+    }
 })
 
-;
+
 //traitement POST de getNombreAbsencesValidees (uniquement pour les congés payés)
 router.post("/getNombreAbsencesValidees", (req, res) => {
     if (!isEmpty(req.body.idUser)) {
@@ -207,9 +207,9 @@ router.post("/getNombreAbsencesValidees", (req, res) => {
                 // s'il existe, on poursuit
                 if (user) {
                     Absence
-                    .countDocuments({ idUser: req.body.idUser, typeConge: req.body.typeConge , validation: "VALIDEE"})
-                    .exec()
-                    .then( resultat => res.send(""+resultat))//il faut convertir le resultat en string sinon res.send ne fonctionne pas
+                        .countDocuments({ idUser: req.body.idUser, typeConge: req.body.typeConge, validation: "VALIDEE" })
+                        .exec()
+                        .then(resultat => res.send("" + resultat))//il faut convertir le resultat en string sinon res.send ne fonctionne pas
                 }
                 else {
                     console.log("no user found");
@@ -217,9 +217,23 @@ router.post("/getNombreAbsencesValidees", (req, res) => {
                 }
             });
     }
-    else { 
+    else {
         console.log("specify a user id");
         return res.status(400).json({ userId: "specify a user id" });
-    } 
+    }
 })
+
+//traitement POST de getJoursFeriesEtRTTEmployeurs
+router.post("/getJoursFeriesEtRTTEmployeurs", (req, res) => {
+
+    let annee = req.body.annee
+
+    Absence
+        .find()
+        .or([{typeConge:"JF"}, {typeConge:"RTTm"}])
+        .exec()
+        .then(resultat => res.send(resultat))
+
+})
+
 module.exports = router;

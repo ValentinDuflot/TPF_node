@@ -178,8 +178,7 @@ class Register extends Component {
                     <div className="form-group">
                         <label>Rôle</label>
                         <div>
-                            <input type="radio" id="employe" name="radio" value="Employe"
-                                defaultChecked onChange={event => { this.onChange(event); }} />
+                            <input type="radio" id="employe" name="radio" value="Employe" defaultChecked onChange={event => { this.onChange(event); }} />
                             <label htmlFor="Employe">Employé</label>
                         </div>
                         <div>
