@@ -7,6 +7,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from 'react-redux';
 import { obtenirAbsenceByUser } from '../actions/absenceActions'
+import NavbarUtilisateur from "./NavbarUtilisateur";
 
 function format(date) {
     let temp = new Date(date);
@@ -25,6 +26,9 @@ const Display = (props) => {
 
     return (
         <div>
+            <NavbarUtilisateur/>
+                
+
             <table className="table">
                 <thead>
                     <tr>

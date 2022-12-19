@@ -37,7 +37,6 @@ class Accueil extends Component {
         return (
             <div>
                 <NavbarUtilisateur/>
-                <button onClick={this.onLogoutClick}> déconnexion </button>
                 
             </div>
         );
