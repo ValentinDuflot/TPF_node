@@ -86,7 +86,8 @@ router.post("/login", (req, res) => {
                 // Correspondance, donc on enregistre les informations de l'utilisateur
                 const payload = {
                     _id: user._id,
-                    name: user.name
+                    name: user.name,
+                    role: user.role
                 };
                 // et on crée un token d'authentification
                 jwt.sign(

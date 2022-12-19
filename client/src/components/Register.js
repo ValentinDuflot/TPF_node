@@ -31,7 +31,7 @@ class Register extends Component {
             mail2I: "",
             passwordI: "",
             password2I: "",
-            roleI: "employe",
+            roleI: "Employe",
             departementI: "",
             ageI: ""
         }
@@ -178,7 +178,7 @@ class Register extends Component {
                         <div>
                             <input type="radio" id="employe" name="radio" value="Employe"
                                 defaultChecked onChange={event => { this.onChange(event); }} />
-                            <label htmlFor="employe">Employé</label>
+                            <label htmlFor="Employe">Employé</label>
                         </div>
                         <div>
                             <input type="radio" id="manager" name="radio" value="Manager" onChange={event => { this.onChange(event); }} />

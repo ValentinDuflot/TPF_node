@@ -10,12 +10,12 @@ import { logoutUser } from "../actions/authActions"
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
+import NavbarUtilisateur from "./NavbarUtilisateur";
+
 // composant React simple
 class Accueil extends Component {
 
-    constructor() {
-        super();
-    }
+    
     componentDidMount() {
         // Si l'utilisateur n'est pas loggé, on le redirige vers la page de connexion
         if (!this.props.auth.isAuthenticated) {
@@ -36,15 +36,11 @@ class Accueil extends Component {
     render() {
         return (
             <div>
-                <h1>ACCUEIL</h1>
-                <button onClick={this.onLogoutClick}> déconnexion </button>
-                <Link to="/addAbsence" className="btn btn-primary btn-block" >
-                    ajouter absence
-                </Link>
+                <NavbarUtilisateur/>
+                
             </div>
         );
     }
-
 }
 
 // informations nécessaires à la transformation du composant en composant apte à requeter la BDD via l'export spécifique ci-dessous
