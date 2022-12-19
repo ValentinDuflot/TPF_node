@@ -14,8 +14,11 @@ const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require("body-parser");
 
-const users = require('./routes/Users.js');
 const passport = require('passport');
+
+//imports des routes pour les requetes
+const users = require('./routes/Users.js');
+const absences = require('./routes/Absences.js');
 
 // définition du port pour le server
 const port = 5000;
@@ -24,6 +27,7 @@ const port = 5000;
 app.use(cors());
 app.use(express.json());
 app.use("/routes/users", users);
+app.use("/routes/absences", absences);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(passport.initialize());

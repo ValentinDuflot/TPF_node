@@ -17,11 +17,12 @@ import Login from './components/Login';
 import Register from './components/Register';
 
 import Accueil from './components/Accueil'
-import { BrowserRouter, Route, Routes, Switch  } from 'react-router-dom';
+import { BrowserRouter, Route, Routes  } from 'react-router-dom';
 
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
+import AddAbsence from './components/AddAbsence';
 
 
 // Check for token to keep user logged in
@@ -37,11 +38,12 @@ if (localStorage.jwtToken) {
   const currentTime = Date.now() / 1000; // to get in milliseconds
   if (decoded.exp < currentTime) {
     // Logout user
-    store.dispatch(logoutUser());
+    store.dispatch(logoutUser()); 
     // Redirect to login
     window.location.href = "./login";
   }
 }
+
 
 // affichage du contenu.
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -60,6 +62,7 @@ root.render(
             <Route path="/login" element={<Login />} ></Route>
             <Route path="/register" element={<Register />} ></Route>
             <Route path="/accueil" element={<Accueil />} ></Route>
+            <Route path="/addAbsence" element={<AddAbsence />} ></Route>
           </Routes>
         </div>
       </BrowserRouter>

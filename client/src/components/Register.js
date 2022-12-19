@@ -65,7 +65,6 @@ class Register extends Component {
 
     // en cas d'envoi du formulaire, on utilise la fonction registerUser pour requeter la BDD et eventuellement créer l'utilisateur
     onSubmit = e => {
-        console.log(this.state.roleI);
         e.preventDefault();
         const newUser = {
             name: this.state.nameI,
