@@ -1,7 +1,5 @@
 /** Author: Valentin DUFLOT
- * Gestion des routes et des requêtes liées aux Absences, donc:
- * /addAbsence (POST)
- * /getAbsence (GET)
+ * Gestion des routes et des requêtes liées aux Absences
 */
 
 // imports requis
@@ -66,15 +64,15 @@ router.get("/getAbsence", (req, res) => {
         })
 });
 
-// traitement des requetes GET de getAbsenceByUser
-router.get("/getAbsenceByUser", (req, res) => {
+// traitement des requetes POST de getAbsenceByUser
+router.post("/getAbsenceByUser", (req, res) => {
     if (!isEmpty(req.body.idUser)) {
 
         // on vérifie qu'il existe un utilisateur à l'ID spécifié
         User.findOne({ _id: req.body.idUser }).then(user => {
             // s'il existe, on poursuit
             if (user) {
-                const liste = Absence
+                const liste = Absence 
                     .find({ idUser: req.body.idUser })
                     .exec()
                     .then(function (absence) {
@@ -82,18 +80,20 @@ router.get("/getAbsenceByUser", (req, res) => {
                     })
             }
             else {
+                console.log("no user found");
                 return res.status(400).json({ mail: "no user found" });
             }
         });
     }
     else {
+        console.log("specify a user id");
         return res.status(400).json({ mail: "specify a user id" });
     }
 });
 
 
-// traitement des requetes GET de getAbsenceByDepartement
-router.get("/getAbsenceByDepartement", (req, res) => {
+// traitement des requetes POST de getAbsenceByDepartement
+router.post("/getAbsenceByDepartement", (req, res) => {
 
     // on vérifie qu'on a reçu un département
     if (!isEmpty(req.body.departement)) {
@@ -121,8 +121,8 @@ router.get("/getAbsenceByDepartement", (req, res) => {
 
 
 
-// traitement des requetes GET de getAbsenceByType
-router.get("/getAbsenceByType", (req, res) => {
+// traitement des requetes POST de getAbsenceByType
+router.post("/getAbsenceByType", (req, res) => {
     if (!isEmpty(req.body.typeConge)) {
         Absence
             .find({ typeConge: req.body.typeConge })

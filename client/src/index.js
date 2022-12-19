@@ -17,6 +17,8 @@ import Login from './components/Login';
 import Register from './components/Register';
 
 import Accueil from './components/Accueil'
+import Display from './components/Display'
+
 import { BrowserRouter, Route, Routes  } from 'react-router-dom';
 
 import jwt_decode from "jwt-decode";
@@ -63,6 +65,8 @@ root.render(
             <Route path="/register" element={<Register />} ></Route>
             <Route path="/accueil" element={<Accueil />} ></Route>
             <Route path="/addAbsence" element={<AddAbsence />} ></Route>
+            <Route path="/display" element={<Display />} ></Route>
+            
           </Routes>
         </div>
       </BrowserRouter>

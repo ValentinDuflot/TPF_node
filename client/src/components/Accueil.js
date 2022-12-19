@@ -42,7 +42,6 @@ class Accueil extends Component {
             </div>
         );
     }
-
 }
 
 // informations nécessaires à la transformation du composant en composant apte à requeter la BDD via l'export spécifique ci-dessous
