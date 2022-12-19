@@ -229,7 +229,7 @@ router.post("/getJoursFeriesEtRTTEmployeurs", (req, res) => {
     let annee = req.body.annee
 
     Absence
-        .find()
+        .find({validation:"VALIDEE"})
         .or([{typeConge:"JF"}, {typeConge:"RTTm"}])
         .exec()
         .then(resultat => res.send(resultat))

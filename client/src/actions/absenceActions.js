@@ -21,6 +21,7 @@ export const addAbsence = (data, history) => dispatch => {
                 payload: err
             })
         );
+        alert("ajout effectué");
 };
 
 export const obtenirAbsenceByUser = data => dispatch => {
