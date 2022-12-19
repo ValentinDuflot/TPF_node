@@ -12,7 +12,7 @@ import NavbarUtilisateur from "./NavbarUtilisateur";
 function format(date) {
     let temp = new Date(date);
 
-    return temp.getDate() + "/" + temp.getMonth() + "/" + temp.getYear();
+    return temp.getDate() + "/" + temp.getMonth() + "/" + (temp.getYear()+1900).toString();
 }
 // composant react simple
 const Display = (props) => {

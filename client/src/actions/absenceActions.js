@@ -21,6 +21,7 @@ export const addAbsence = (data, history) => dispatch => {
                 payload: err
             })
         );
+        alert("ajout effectué");
 };
 
 export const obtenirAbsenceByUser = data => dispatch => {
@@ -38,7 +39,7 @@ export const obtenirAbsenceByUser = data => dispatch => {
                     type: GET_ERRORS,
                     payload: err
                 })
-            ) 
+            )
     }, [])
 
     return liste;
@@ -64,14 +65,14 @@ export const obtenirNombreAbsences = data => dispatch => {
 }
 
 export const obtenirNombreAbsencesValidees = data => dispatch => {
-    
+
     const [resultat, setResultat] = useState([]);
 
     useEffect(() => {
         axios
             .post("http://127.0.0.1:5000/routes/absences/getNombreAbsencesValidees", data)
             .then(res => {
-                setResultat(res.data) 
+                setResultat(res.data)
             }
             )
             .catch(err =>
@@ -84,14 +85,14 @@ export const obtenirNombreAbsencesValidees = data => dispatch => {
     return resultat;
 }
 export const obtenirNombreAbsencesRestants = data => dispatch => {
-    
+
     const [resultat, setResultat] = useState([]);
 
     useEffect(() => {
         axios
             .post("http://127.0.0.1:5000/routes/absences/getNombreAbsencesValidees", data)
             .then(res => {
-                setResultat(res.data) 
+                setResultat(res.data)
             }
             )
             .catch(err =>
@@ -101,6 +102,27 @@ export const obtenirNombreAbsencesRestants = data => dispatch => {
                 })
             )
     }, [])
-    
-    return 25-resultat;
+
+    return 25 - resultat;
+}
+
+export const obtenirJFetRTT = data => dispatch => {
+    const [resultat, setResultat] = useState([]);
+
+    useEffect(() => {
+    axios
+        .post("http://127.0.0.1:5000/routes/absences/getJoursFeriesEtRTTEmployeurs", data)
+        .then(res => {
+            setResultat(res.data)
+        }
+        )
+        .catch(err =>
+            dispatch({
+                type: GET_ERRORS,
+                payload: err
+            })
+        )
+    }, [])
+
+    return resultat;
 }

@@ -18,6 +18,7 @@ import Register from './components/Register';
 
 import Accueil from './components/Accueil'
 import Display from './components/Display'
+import DisplayJFEtRTT from './components/FeriesEtRtt'
 
 import { BrowserRouter, Route, Routes  } from 'react-router-dom';
 
@@ -66,6 +67,8 @@ root.render(
             <Route path="/accueil" element={<Accueil />} ></Route>
             <Route path="/addAbsence" element={<AddAbsence />} ></Route>
             <Route path="/display" element={<Display />} ></Route>
+            <Route path="/ferieEtRtt" element={<DisplayJFEtRTT />} ></Route>
+            
             
           </Routes>
         </div>
