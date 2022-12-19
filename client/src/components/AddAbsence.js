@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import PropTypes from "prop-types";
 import { addAbsence } from "../actions/absenceActions";
 
-import { isMajor, isNotEmpty, testMDP, testMails, checkMail, handleChangeFocusAndBlur, tailleMDP } from '../LoginRegisterHelpers.js'
+import { isNotEmpty, handleChangeFocusAndBlur } from '../LoginRegisterHelpers.js'
 
 
 class AddAbsence extends Component {
