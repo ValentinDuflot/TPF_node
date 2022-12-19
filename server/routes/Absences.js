@@ -72,7 +72,7 @@ router.post("/getAbsenceByUser", (req, res) => {
         User.findOne({ _id: req.body.idUser }).then(user => {
             // s'il existe, on poursuit
             if (user) {
-                const liste = Absence 
+                Absence
                     .find({ idUser: req.body.idUser })
                     .exec()
                     .then(function (absence) {
@@ -170,4 +170,56 @@ router.post("/deleteAbsence", (req, res) => {
     }
 });
 
+
+
+//traitement POST de getNombreAbsences (uniquement pour les congés payés)
+router.post("/getNombreAbsences", (req, res) => {
+    if (!isEmpty(req.body.idUser)) {
+        // on vérifie qu'il existe un utilisateur à l'ID spécifié
+        User.findOne({ _id: req.body.idUser })
+            .then(user => {
+                // s'il existe, on poursuit
+                if (user) {
+                    Absence
+                    .countDocuments({ idUser: req.body.idUser, typeConge: req.body.typeConge })
+                    .exec()
+                    .then( resultat => res.send(""+resultat))//il faut convertir le resultat en string sinon res.send ne fonctionne pas
+                }
+                else {
+                    console.log("no user found");
+                    return res.status(400).json({ userId: "no user found" });
+                }
+            });
+    }
+    else { 
+        console.log("specify a user id");
+        return res.status(400).json({ userId: "specify a user id" });
+    } 
+})
+
+;
+//traitement POST de getNombreAbsencesValidees (uniquement pour les congés payés)
+router.post("/getNombreAbsencesValidees", (req, res) => {
+    if (!isEmpty(req.body.idUser)) {
+        // on vérifie qu'il existe un utilisateur à l'ID spécifié
+        User.findOne({ _id: req.body.idUser })
+            .then(user => {
+                // s'il existe, on poursuit
+                if (user) {
+                    Absence
+                    .countDocuments({ idUser: req.body.idUser, typeConge: req.body.typeConge , validation: "VALIDEE"})
+                    .exec()
+                    .then( resultat => res.send(""+resultat))//il faut convertir le resultat en string sinon res.send ne fonctionne pas
+                }
+                else {
+                    console.log("no user found");
+                    return res.status(400).json({ userId: "no user found" });
+                }
+            });
+    }
+    else { 
+        console.log("specify a user id");
+        return res.status(400).json({ userId: "specify a user id" });
+    } 
+})
 module.exports = router;

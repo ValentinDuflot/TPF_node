@@ -9,7 +9,7 @@ const Schema = mongoose.Schema;
 //définition du schéma AbsenceSchema
 const AbsenceSchema = new Schema({
     id: String,
-    typeConge: String, // RTT/ CP/ CSS/ M/ JF
+    typeConge: String, // RTTe /RTTm /CP/ CSS/ M/ JF
     dateDebut: Date,
     dateFin: Date,
     idUser: String,
