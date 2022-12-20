@@ -19,6 +19,7 @@ import Register from './components/Register';
 import Accueil from './components/Accueil'
 import Display from './components/Display'
 import DisplayJFEtRTT from './components/FeriesEtRtt'
+import Calendrier from './components/Calendrier'
 
 import { BrowserRouter, Route, Routes  } from 'react-router-dom';
 
@@ -68,6 +69,7 @@ root.render(
             <Route path="/addAbsence" element={<AddAbsence />} ></Route>
             <Route path="/display" element={<Display />} ></Route>
             <Route path="/ferieEtRtt" element={<DisplayJFEtRTT />} ></Route>
+            <Route path="/planning" element={<Calendrier />} ></Route>
             
             
           </Routes>

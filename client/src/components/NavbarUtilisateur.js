@@ -76,6 +76,11 @@ class NavbarUtilisateur extends Component {
                             </Link>
                         </li>
                         <li className="nav-item" role="presentation">
+                            <Link to="/planning" className="btn btn-primary btn-block" >
+                                Planning des absences
+                            </Link>
+                        </li>
+                        <li className="nav-item" role="presentation">
                             <Link to="/validation" className="btn btn-primary btn-block" >
                                 Validation des demandes
                             </Link>
