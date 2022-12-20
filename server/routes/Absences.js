@@ -226,14 +226,42 @@ router.post("/getNombreAbsencesValidees", (req, res) => {
 //traitement POST de getJoursFeriesEtRTTEmployeurs
 router.post("/getJoursFeriesEtRTTEmployeurs", (req, res) => {
 
-    let annee = req.body.annee
-
     Absence
-        .find({validation:"VALIDEE"})
-        .or([{typeConge:"JF"}, {typeConge:"RTTm"}])
+        .find({ validation: "VALIDEE" })
+        .or([{ typeConge: "JF" }, { typeConge: "RTTm" }])
         .exec()
         .then(resultat => res.send(resultat))
 
+})
+
+
+// rempalce le champ idUser par son nom 
+// NON FONCTIONNEL
+function replaceByValue(json) {
+    
+    for (var k = 0; k < json.length; k++) {
+        let id = json[k].idUser
+        User.findOne({ _id: id })
+        .exec()
+            .then((user) => { this.nomUser= user.name}
+            )
+            json[k].idUser = this.nomUser
+    }
+    
+    //console.log(json);
+    return json;
+}
+
+router.post("/getAbsencesAValider", (req, res) => {
+
+    Absence
+        .find({ validation: "EN_ATTENTE_VALIDATION" })
+        .or([{ typeConge: "RTT" }, { typeConge: "CSS" }, { typeConge: "CP" }])
+        .exec()
+        .then(resultat => {
+            replaceByValue(resultat);
+            res.send(resultat)
+        });
 })
 
 module.exports = router;

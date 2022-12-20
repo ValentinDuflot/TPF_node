@@ -8,6 +8,7 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types";
+import { useEffect, useState } from "react";
 
 
 
@@ -46,6 +47,29 @@ export const loginUser = userData => dispatch => {
             })
         );
 };
+
+export const obtenirUserByID = data => dispatch => {
+
+    const [resultat, setResultat] = useState([]);
+
+    useEffect(() => {
+
+        axios.
+            post("http://127.0.0.1:5000/routes/users/getUserByID", data)
+            .then(res => {
+                setResultat(res.data)
+            }
+            )
+            .catch(err =>
+                dispatch({
+                    type: GET_ERRORS,
+                    payload: err
+                })
+            )
+    }, [])
+
+    return resultat;
+}
 
 export const setCurrentUser = decoded => {
     return {

@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import PropTypes from "prop-types";
-import { addAbsence } from "../actions/absenceActions";
+import { addAbsence} from "../actions/absenceActions";
 
 import { isNotEmpty, handleChangeFocusAndBlur } from '../LoginRegisterHelpers.js'
 import NavbarUtilisateur from './NavbarUtilisateur';
@@ -56,8 +56,10 @@ class AddAbsence extends Component {
     };
 
     // en cas d'envoi du formulaire, on utilise la fonction addAbsence pour requeter la BDD et eventuellement créer l'absence
-    onSubmit = e => {
+    onSubmit = async e => {
         e.preventDefault();
+        
+            
         const newAbsence = {
 
             typeConge: this.state.typeSelecteur,
@@ -69,6 +71,8 @@ class AddAbsence extends Component {
 
         };
         this.props.addAbsence(newAbsence, this.props.history);
+        //window.location.href = "/display";
+
     };
 
     // affichage du composant
@@ -116,7 +120,7 @@ class AddAbsence extends Component {
                             }}>
                             {(this.props.auth.user.role !== "Admin" && <option value="RTTe">RTT Employé</option>)}
 
-                            {(this.props.auth.user.role === "Manager" && <option value="RTTm">RTT Employeur</option>)}
+                            {(this.props.auth.user.role !== "Employe" && <option value="RTTm">RTT Employeur</option>)}
 
                             {(this.props.auth.user.role !== "Admin" && <option value="CP">Congé payé</option>)}
                             {(this.props.auth.user.role !== "Admin" && <option value="CSS">Congé sans solde</option>)}

@@ -8,31 +8,31 @@ import PropTypes from "prop-types";
 import { connect } from 'react-redux';
 import { obtenirJFetRTT } from '../actions/absenceActions'
 import NavbarUtilisateur from "./NavbarUtilisateur";
+import { Link } from "react-router-dom";
 
 function format(date) {
     let temp = new Date(date);
 
-    return temp.getDate() + "/" + temp.getMonth() + "/" + (temp.getYear()+1900).toString();
+    return temp.getDate() + "/" + temp.getMonth() + "/" + (temp.getYear() + 1900).toString();
 }
 
 function affichageJour(date) {
-    
-    switch (new Date(date).getDay())
-    {
-        case 3: return "Lundi"; 
-        case 4: return "Mardi"; 
-        case 5: return "Mercredi"; 
-        case 6: return "Jeudi"; 
-        case 7: return "Vendredi"; 
-        case 1: return "Samedi"; 
-        case 2: return "Dimanche"; 
+
+    switch (new Date(date).getDay()) {
+        case 3: return "Lundi";
+        case 4: return "Mardi";
+        case 5: return "Mercredi";
+        case 6: return "Jeudi";
+        case 7: return "Vendredi";
+        case 1: return "Samedi";
+        case 2: return "Dimanche";
     }
 }
-// composant react simple
 const DisplayJFEtRTT = (props) => {
 
     const annees = [2022, 2023];
     const [selecteur, setSelecteur] = useState(2022);
+
 
     let liste = props.obtenirJFetRTT();
 
@@ -48,10 +48,16 @@ const DisplayJFEtRTT = (props) => {
                     {val.typeConge === "RTTm" && <p>RTT employeur</p>}
                 </td>
                 <td>
-                    { affichageJour(val.dateDebut)
+                    {affichageJour(val.dateDebut)
                     }
                 </td>
                 <td> {val.commentaire}</td>
+                {props.auth.user.role === "Admin" &&
+                    <td>
+                        <button> modifier </button>
+                        <button> supprimer </button>
+                    </td>
+                }
             </tr>)
             ));
     }, [selecteur, liste])
@@ -84,6 +90,9 @@ const DisplayJFEtRTT = (props) => {
                         <th>Type de congé</th>
                         <th>Jour</th>
                         <th>Motif</th>
+                        {props.auth.user.role === "Admin" &&
+                            <th>Actions</th>
+                        }
 
                     </tr>
 
@@ -92,10 +101,14 @@ const DisplayJFEtRTT = (props) => {
                 </tbody>
             </table>
 
+            {props.auth.user.role === "Admin" &&
+                <Link to="/ajoutFerieEtRtt" className="btn btn-primary btn-block" >
+                    ajout jour fériés et RTT employeur
+                </Link>
+            }
         </div>
     )
 }
-
 
 // informations nécessaires à la transformation du composant en composant apte à requeter la BDD via l'export spécifique ci-dessous
 DisplayJFEtRTT.propTypes = {

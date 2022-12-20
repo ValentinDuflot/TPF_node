@@ -20,6 +20,7 @@ import Accueil from './components/Accueil'
 import Display from './components/Display'
 import DisplayJFEtRTT from './components/FeriesEtRtt'
 import Calendrier from './components/Calendrier'
+import Validation from './components/Validation'
 
 import { BrowserRouter, Route, Routes  } from 'react-router-dom';
 
@@ -61,16 +62,17 @@ root.render(
           <Route path="/register" element={<Navbar />} ></Route>
         </Routes>
 
-        <div className="container-fluid nav-justified" >
+        <div className="container-fluid nav-justified" id="body">
           <Routes>
             <Route path="/login" element={<Login />} ></Route>
             <Route path="/register" element={<Register />} ></Route>
             <Route path="/accueil" element={<Accueil />} ></Route>
             <Route path="/addAbsence" element={<AddAbsence />} ></Route>
+            <Route path="/ajoutFerieEtRtt" element={<AddAbsence />} ></Route>
             <Route path="/display" element={<Display />} ></Route>
             <Route path="/ferieEtRtt" element={<DisplayJFEtRTT />} ></Route>
             <Route path="/planning" element={<Calendrier />} ></Route>
-            
+            <Route path="/validation" element={<Validation />} ></Route>
             
           </Routes>
         </div>

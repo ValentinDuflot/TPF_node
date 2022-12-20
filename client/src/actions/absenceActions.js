@@ -21,7 +21,7 @@ export const addAbsence = (data, history) => dispatch => {
                 payload: err
             })
         );
-        alert("ajout effectué");
+
 };
 
 export const obtenirAbsenceByUser = data => dispatch => {
@@ -110,19 +110,39 @@ export const obtenirJFetRTT = data => dispatch => {
     const [resultat, setResultat] = useState([]);
 
     useEffect(() => {
-    axios
-        .post("http://127.0.0.1:5000/routes/absences/getJoursFeriesEtRTTEmployeurs", data)
-        .then(res => {
-            setResultat(res.data)
-        }
-        )
-        .catch(err =>
-            dispatch({
-                type: GET_ERRORS,
-                payload: err
-            })
-        )
+        axios
+            .post("http://127.0.0.1:5000/routes/absences/getJoursFeriesEtRTTEmployeurs", data)
+            .then(res => {
+                setResultat(res.data)
+            }
+            )
+            .catch(err =>
+                dispatch({
+                    type: GET_ERRORS,
+                    payload: err
+                })
+            )
     }, [])
 
+    return resultat;
+}
+
+export const obtenirAbsencesAValider = data => dispatch => {
+    const [resultat, setResultat] = useState([]);
+
+    useEffect(() => {
+        axios
+            .post("http://127.0.0.1:5000/routes/absences/getAbsencesAValider", data)
+            .then(res => {
+                setResultat(res.data);
+            })
+            .catch(err =>
+                dispatch({
+                    type: GET_ERRORS,
+                    payload: err
+                })
+            )
+            
+    }, [])
     return resultat;
 }

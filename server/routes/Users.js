@@ -41,7 +41,7 @@ router.post("/register", (req, res) => {
                 password: req.body.password,
                 role: req.body.role,
                 departement: req.body.departement,
-                age:req.body.age
+                age: req.body.age
             });
             // on ne sauvegarde pas le pass en clair, on le hash
             bcrypt.genSalt(10, (err, salt) => {
@@ -113,5 +113,29 @@ router.post("/login", (req, res) => {
         });
     });
 });
+
+router.post("/getUserByID", (req, res) => {
+    if (req.body.idUser !== "") {
+        User.findOne({ _id: req.body.idUser })
+            .then(user => {
+                if (user) {
+                    res.send(user)
+                }
+                else {
+                    return res
+                        .status(400)
+                        .json({ user: "no user found" });
+                }
+
+            })
+    }
+    else {
+        return res
+            .status(400)
+            .json({ user: "specify idUser" });
+    }
+
+
+})
 
 module.exports = router;
